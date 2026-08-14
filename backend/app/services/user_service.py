@@ -1,10 +1,10 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.core.security import hash_password
+from app.core.security import hash_password, verify_password, create_access_token
 from app.models.user import User
 from app.repositories import user_repository
-from app.schemas.user import UserCreate
+from app.schemas.user import UserCreate, UserLogin
 
 
 def register_user(db: Session, user_data: UserCreate) -> User:
@@ -32,3 +32,15 @@ def register_user(db: Session, user_data: UserCreate) -> User:
     )
 
     return new_user
+
+
+def login_user(db: Session, credentials: UserLogin) -> str:
+    user = user_repository.get_by_username(db, credentials.username)
+
+    if not user or not verify_password(credentials.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password.",
+        )
+
+    return create_access_token(subject=str(user.id))
