@@ -1,9 +1,12 @@
+from decimal import Decimal
+
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.security import hash_password, verify_password, create_access_token
 from app.models.user import User
-from app.repositories import user_repository
+from app.repositories import user_repository, wallet_repository
 from app.schemas.user import UserCreate, UserLogin
 
 
@@ -29,6 +32,12 @@ def register_user(db: Session, user_data: UserCreate) -> User:
         username=user_data.username,
         email=user_data.email,
         hashed_password=hashed,
+    )
+
+    wallet_repository.create(
+        db,
+        user_id=new_user.id,
+        balance=Decimal(str(settings.initial_virtual_balance)),
     )
 
     return new_user

@@ -16,6 +16,8 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_expire_minutes: int = 60
 
+    initial_virtual_balance: float = 100000.00
+
     @property
     def database_url(self) -> str:
         return(
