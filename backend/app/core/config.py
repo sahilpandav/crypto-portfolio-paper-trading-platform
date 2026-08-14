@@ -18,6 +18,8 @@ class Settings(BaseSettings):
 
     initial_virtual_balance: float = 100000.00
 
+    binance_api_base_url: str = "https://api.binance.com"
+
     @property
     def database_url(self) -> str:
         return(

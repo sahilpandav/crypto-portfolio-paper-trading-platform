@@ -5,6 +5,8 @@ from app.core.config import settings
 from app.core.database import engine
 from app.api.v1.auth import router as auth_router
 from app.api.v1.wallet import router as wallet_router
+from app.api.v1.portfolio import router as portfolio_router
+
 
 app = FastAPI(
     title=settings.app_name,
@@ -13,6 +15,7 @@ app = FastAPI(
 
 app.include_router(auth_router, prefix="/api/v1")
 app.include_router(wallet_router, prefix="/api/v1")
+app.include_router(portfolio_router, prefix="/api/v1")
 
 
 @app.get("/health")
