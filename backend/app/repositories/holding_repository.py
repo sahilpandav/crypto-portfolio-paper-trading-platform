@@ -33,3 +33,12 @@ def update(db: Session, holding: Holding, quantity: Decimal, average_buy_price: 
     holding.average_buy_price = average_buy_price
     db.add(holding)
     return holding
+
+
+def update_quantity(db: Session, holdling: Holding, quantity: Decimal) -> Holding:
+    holdling.quantity = quantity
+    db.add(holdling)
+    return holdling
+
+def delete(db: Session, holding: Holding) -> None:
+    db.delete(holding)
