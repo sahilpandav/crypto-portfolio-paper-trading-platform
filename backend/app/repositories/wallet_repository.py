@@ -15,3 +15,9 @@ def create(db: Session, user_id: int, balance: Decimal) -> Wallet:
     db.commit()
     db.refresh(new_wallet)
     return new_wallet
+
+
+def update_balance(db: Session, wallet: Wallet, new_balance: Decimal) -> Wallet:
+    wallet.balance = new_balance
+    db.add(wallet)
+    return wallet
