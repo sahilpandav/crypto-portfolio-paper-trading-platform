@@ -8,6 +8,7 @@ from app.api.v1.wallet import router as wallet_router
 from app.api.v1.portfolio import router as portfolio_router
 from app.api.v1.trade import router as trade_router
 from app.api.v1.market import router as market_router
+from app.api.v1.watchlist import router as watchlist_router
 
 
 app = FastAPI(
@@ -20,6 +21,7 @@ app.include_router(wallet_router, prefix="/api/v1")
 app.include_router(portfolio_router, prefix="/api/v1")
 app.include_router(trade_router, prefix="/api/v1")
 app.include_router(market_router, prefix="/api/v1")
+app.include_router(watchlist_router, prefix="/api/v1")
 
 
 @app.get("/health")
