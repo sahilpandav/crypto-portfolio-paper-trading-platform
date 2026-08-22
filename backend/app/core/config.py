@@ -11,6 +11,8 @@ class Settings(BaseSettings):
     db_user: str
     db_password: str
     db_name: str
+    test_db_name: str = "opentrade_test_db"
+
 
     jwt_secret_key: str
     jwt_algorithm: str = "HS256"
@@ -25,6 +27,13 @@ class Settings(BaseSettings):
         return(
             f"mysql+pymysql://{self.db_user}:{self.db_password}"
             f"@{self.db_host}:{self.db_port}/{self.db_name}"
+        )
+
+    @property
+    def test_database_url(self) -> str:
+        return (
+            f"mysql+pymysql://{self.db_user}:{self.db_password}"
+            f"@{self.db_host}:{self.db_port}/{self.test_db_name}"
         )
 
     class Config:
